@@ -108,58 +108,68 @@
         }
 
         // Page 2: Add Sale
-        function updateProductDropdown() {
-            const select = document.getElementById('soldProduct');
-            select.innerHTML = '<option value="">Select Product</option>';
-            purchases.forEach(purchase => {
-                const option = document.createElement('option');
-                option.value = purchase.productName;
-                option.textContent = purchase.productName;
-                select.appendChild(option);
-            });
+           // Page 2: Add Sale
+    function updateProductDropdown() {
+        const select = document.getElementById('soldProduct');
+        select.innerHTML = '<option value="">Select Product</option>';
+        purchases.forEach(purchase => {
+            const option = document.createElement('option');
+            option.value = purchase.productName;
+            option.textContent = purchase.productName;
+            select.appendChild(option);
+        });
+    }
+
+    function addSale() {
+        const customerName = document.getElementById('customerName').value;
+        const customerContact = document.getElementById('customerContact').value;
+        const soldProduct = document.getElementById('soldProduct').value;
+        const sellingAmount = parseFloat(document.getElementById('sellingAmount').value);
+        const saleDate = document.getElementById('saleDate').value;
+
+        if (!customerName || !customerContact || !soldProduct || !sellingAmount || !saleDate) {
+            alert('Please fill all fields');
+            return;
         }
 
-        function addSale() {
-            const customerName = document.getElementById('customerName').value;
-            const customerContact = document.getElementById('customerContact').value;
-            const soldProduct = document.getElementById('soldProduct').value;
-            const sellingAmount = parseFloat(document.getElementById('sellingAmount').value);
-            const saleDate = document.getElementById('saleDate').value;
+        const sale = { customerName, customerContact, soldProduct, sellingAmount, saleDate };
+        sales.push(sale);
+        localStorage.setItem('sales', JSON.stringify(sales));
+        loadSales();
+        document.getElementById('customerName').value = '';
+        document.getElementById('customerContact').value = '';
+        document.getElementById('soldProduct').value = '';
+        document.getElementById('sellingAmount').value = '';
+        document.getElementById('saleDate').value = '';
+    }
 
-            if (!customerName || !customerContact || !soldProduct || !sellingAmount || !saleDate) {
-                alert('Please fill all fields');
-                return;
-            }
-
-            const sale = { customerName, customerContact, soldProduct, sellingAmount, saleDate };
-            sales.push(sale);
+    function deleteSale(index) {
+        if (confirm('Are you sure you want to delete this sale?')) {
+            sales.splice(index, 1);
             localStorage.setItem('sales', JSON.stringify(sales));
             loadSales();
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerContact').value = '';
-            document.getElementById('soldProduct').value = '';
-            document.getElementById('sellingAmount').value = '';
-            document.getElementById('saleDate').value = '';
         }
+    }
 
-        function loadSales() {
-            const tbody = document.getElementById('salesTableBody');
-            tbody.innerHTML = '';
-            sales.forEach(sale => {
-                const purchase = purchases.find(p => p.productName === sale.soldProduct);
-                const earnedAmount = purchase ? (sale.sellingAmount - purchase.purchaseAmount).toFixed(2) : 'N/A';
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td data-label="Customer">${sale.customerName}</td>
-                    <td data-label="Contact">${sale.customerContact}</td>
-                    <td data-label="Product">${sale.soldProduct}</td>
-                    <td data-label="Amount">$${sale.sellingAmount.toFixed(2)}</td>
-                    <td data-label="Earned Amount">${earnedAmount !== 'N/A' ? (earnedAmount >= 0 ? '$' + earnedAmount : '-$' + Math.abs(earnedAmount)) : 'N/A'}</td>
-                    <td data-label="Date">${sale.saleDate}</td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
+    function loadSales() {
+        const tbody = document.getElementById('salesTableBody');
+        tbody.innerHTML = '';
+        sales.forEach((sale, index) => {
+            const purchase = purchases.find(p => p.productName === sale.soldProduct);
+            const earnedAmount = purchase ? (sale.sellingAmount - purchase.purchaseAmount).toFixed(2) : 'N/A';
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td data-label="Customer">${sale.customerName}</td>
+                <td data-label="Contact">${sale.customerContact}</td>
+                <td data-label="Product">${sale.soldProduct}</td>
+                <td data-label="Amount">$${sale.sellingAmount.toFixed(2)}</td>
+                <td data-label="Earned Amount">${earnedAmount !== 'N/A' ? (earnedAmount >= 0 ? '$' + earnedAmount : '-$' + Math.abs(earnedAmount)) : 'N/A'}</td>
+                <td data-label="Date">${sale.saleDate}</td>
+                <td data-label="Action"><button class="delete-btn" onclick="deleteSale(${index})">Delete</button></td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
 
         // Page 3: Generate Monthly Report
 function generateReport() {
