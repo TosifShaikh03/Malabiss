@@ -71,48 +71,49 @@
         </div>
 
         <!-- Page 2: Customer Sales -->
-        <div id="page2" class="page">
-            <h2>Customer Sales</h2>
-            <div class="form-group">
-                <label for="customerName">Customer Name</label>
-                <input type="text" id="customerName" required>
-            </div>
-            <div class="form-group">
-                <label for="customerContact">Contact Details</label>
-                <input type="text" id="customerContact" required>
-            </div>
-            <div class="form-group">
-                <label for="soldProduct">Product Sold</label>
-                <select id="soldProduct" required>
-                    <option value="">Select Product</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="sellingAmount">Selling Amount ($)</label>
-                <input type="number" id="sellingAmount" step="0.01" required>
-            </div>
-            <div class="form-group">
-                <label for="saleDate">Sale Date</label>
-                <input type="date" id="saleDate" required>
-            </div>
-            <button onclick="addSale()">Record Sale</button>
-            <h3>Sales History</h3>
-            <div class="table-container">
-                <table id="salesTable">
-                    <thead>
-                        <tr>
-                            <th>Customer</th>
-                            <th>Contact</th>
-                            <th>Product</th>
-                            <th>Amount</th>
-                            <th>Earned Amount</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody id="salesTableBody"></tbody>
-                </table>
-            </div>
-        </div>
+    <div id="page2" class="page">
+    <h2>Customer Sales</h2>
+    <div class="form-group">
+        <label for="customerName">Customer Name</label>
+        <input type="text" id="customerName" required>
+    </div>
+    <div class="form-group">
+        <label for="customerContact">Contact Details</label>
+        <input type="text" id="customerContact" required>
+    </div>
+    <div class="form-group">
+        <label for="soldProduct">Product Sold</label>
+        <select id="soldProduct" required>
+            <option value="">Select Product</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="sellingAmount">Selling Amount ($)</label>
+        <input type="number" id="sellingAmount" step="0.01" required>
+    </div>
+    <div class="form-group">
+        <label for="saleDate">Sale Date</label>
+        <input type="date" id="saleDate" required>
+    </div>
+    <button onclick="addSale()">Record Sale</button>
+    <h3>Sales History</h3>
+    <div class="table-container">
+        <table id="salesTable">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Contact</th>
+                    <th>Product</th>
+                    <th>Amount</th>
+                    <th>Earned Amount</th>
+                    <th>Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="salesTableBody"></tbody>
+        </table>
+    </div>
+</div>
 
         <!-- Page 3: Monthly Report -->
         <div id="page3" class="page">
